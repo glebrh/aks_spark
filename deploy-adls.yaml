@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spark-submit-test-deploy-v2
+  labels:
+    purpose: demonstrate-command
+spec:
+  securityContext:
+    runAsUser: 0
+  containers:
+  - name: spark-submit-test-deploy-container-v2
+    image: sparkimagesglebs.azurecr.io/spark-py:3.0.0
+    args: ["/opt/spark/bin/spark-submit", "--master", "k8s://https://sparkakscluster-dns-46f9cb01.hcp.westeurope.azmk8s.io:443", "--deploy-mode", "cluster", "--name", "spark-app-from-yaml", "--conf", "spark.executor.instances=1", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark", "--conf", "spark.kubernetes.container.image=sparkimagesglebs.azurecr.io/spark-py:adls", "https://sparkstor.blob.core.windows.net/pyjobs/test_adls.py"]
+  serviceAccountName: spark
+  restartPolicy: Never

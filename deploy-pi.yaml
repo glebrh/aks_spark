@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spark-submit-test-deploy-v2
+  labels:
+    purpose: demonstrate-command
+spec:
+  securityContext:
+    runAsUser: 0
+  containers:
+  - name: spark-submit-test-deploy-container-v2
+    image: sparkimagesglebs.azurecr.io/spark-py:3.0.0
+    imagePullPolicy: Always
+    args: ["/opt/spark/bin/spark-submit", "--master", "k8s://https://sparkakscluster-dns-46f9cb01.hcp.westeurope.azmk8s.io:443", "--deploy-mode", "cluster", "--name", "spark-app-from-yaml", "--conf", "spark.executor.instances=1", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark", "--conf", "spark.kubernetes.container.image=sparkimagesglebs.azurecr.io/spark-py:3.0.0", "--conf", "spark.kubernetes.driver.limit.cores=0.5", "--conf", "spark.kubernetes.executor.limit.cores=0.5", "--conf", "spark.kubernetes.driver.request.cores=0.1", "--conf", "spark.kubernetes.executor.request.cores=0.1", "--conf", "spark.executor.instances=1", "--conf", "spark.kubernetes.container.image.pullPolicy=Always", "--jars", "local:///mnt/azure/jars/wildfly-openssl-1.0.7.Final.jar,local:///mnt/azure/jars/hadoop-azure-3.2.1.jar", "--conf", "spark.kubernetes.driver.volumes.persistentVolumeClaim.azure.mount.path=/mnt/azure", "--conf", "spark.kubernetes.driver.volumes.persistentVolumeClaim.azure.options.claimName=spark-pvc", "--conf", "spark.kubernetes.executor.volumes.persistentVolumeClaim.azure.mount.path=/mnt/azure", "--conf", "spark.kubernetes.executor.volumes.persistentVolumeClaim.azure.options.claimName=spark-pvc", "local:///mnt/azure/pyjobs/test_adls.py"]
+  serviceAccountName: spark
+  restartPolicy: Never

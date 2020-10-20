@@ -1,0 +1,39 @@
+ARG base_img
+
+FROM $base_img
+WORKDIR /
+
+# Reset to root to run installation tasks
+USER 0
+
+
+ENV HADOOP_VERSION 3.2.1
+ENV ARCHIVE_URL http://archive.apache.org/dist
+
+
+ENV HADOOP_HOME /opt/hadoop
+
+RUN mkdir -p /tmp \
+	&& cd /tmp \
+	&& apt install -y curl \
+	&& curl -sL --retry 3 "${ARCHIVE_URL}/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz" | tar xz  \
+	&& mv hadoop-${HADOOP_VERSION} /opt/hadoop
+	
+
+ENV PATH $SPARK_HOME/bin:$HADOOP_HOME/bin:$PATH
+
+# Customization of entrypoint script to export ENV variable as the result of hadoop command (used within entrypoint)
+RUN sed -i '2i #CUSTOMCLASSPATH\n' /opt/entrypoint.sh \
+	&& sed -i '/#CUSTOMCLASSPATH/a export SPARK_DIST_CLASSPATH=$(hadoop classpath):/opt/hadoop/share/hadoop/tools/lib/*\necho "Checking classpath set"\necho $SPARK_DIST_CLASSPATH' /opt/entrypoint.sh
+	
+# Creation of spark-env.sh file to setup SPARK_DIST_CLASSPATH variable from template (used for spark-submit)
+COPY spark-env.sh /opt/spark/conf/
+RUN cd /opt/spark/conf \
+	&& echo 'export SPARK_DIST_CLASSPATH=$(hadoop classpath):$HADOOP_HOME/share/hadoop/tools/lib/*' >> spark-env.sh
+
+WORKDIR /opt/spark/work-dir
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
+
+# Specify the User that the actual main process will run as
+ARG spark_uid=185
+USER ${spark_uid}
