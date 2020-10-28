@@ -7,9 +7,9 @@ spec:
   containers:
     - name: template-container
       volumeMounts:
-        - name: azurever2
+        - name: azure
           mountPath: /mnt/azurever2
   volumes:
-  - name: azurever2
+  - name: azurev
     persistentVolumeClaim:
       claimName: spark-pvc
