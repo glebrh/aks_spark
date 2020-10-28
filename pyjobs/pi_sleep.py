@@ -20,6 +20,8 @@ if __name__ == "__main__":
 
     print("CLIEND_ID: ", os.getenv('CLIEND_ID'))
     print("CLIEND_SECRET: ", os.getenv('CLIEND_SECRET'))
+    print("SPECIAL_LEVEL: ", os.getenv('SPECIAL_LEVEL'))
+    print("SPECIAL_TYPE: ", os.getenv('SPECIAL_TYPE'))
     print("Start 60 seconds sleep")
     time.sleep(60)
     print("Ended sleep")
