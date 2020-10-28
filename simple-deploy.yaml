@@ -15,14 +15,11 @@ spec:
     volumeMounts:
       - name: azure
         mountPath: /mnt/azure
-      - name: azure2
+      - name: azure
         mountPath: /mnt/azure2
   restartPolicy: Never
   serviceAccountName: spark # Probably requried to execute spark-submit job (but I'm not sure)
   volumes:
   - name: azure
-    persistentVolumeClaim:
-      claimName: spark-pvc
-  - name: azure2
     persistentVolumeClaim:
       claimName: spark-pvc
