@@ -18,8 +18,6 @@ spec:
       - name: azure
         mountPath: /mnt/azure2
   restartPolicy: Never
-  nodeSelector:
-    kubernetes.io/hostname: aks-agentpool-65875321-vmss000000
   serviceAccountName: spark # Probably requried to execute spark-submit job (but I'm not sure)
   volumes:
   - name: azure
