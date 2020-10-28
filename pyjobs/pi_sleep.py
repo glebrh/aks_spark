@@ -18,8 +18,8 @@ if __name__ == "__main__":
         .appName("PythonPi")\
         .getOrCreate()
 
-    print("CLIENT_ID: ", os.getenv('CLIEND_ID'))
-    print("CLIENT_SECRET: ", os.getenv('CLIEND_SECRET'))
+    print("CLIENT_ID: ", os.getenv('CLIENT_ID'))
+    print("CLIENT_SECRET: ", os.getenv('CLIENT_SECRET'))
     print("SPECIAL_LEVEL: ", os.getenv('SPECIAL_LEVEL'))
     print("SPECIAL_TYPE: ", os.getenv('SPECIAL_TYPE'))
     print("Start 60 seconds sleep")
