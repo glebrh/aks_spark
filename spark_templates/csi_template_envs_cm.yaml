@@ -22,8 +22,16 @@ spec:
           secretKeyRef:
             name: akvsecrets
             key: storageak
-      - configMapRef:
-          name: special-config  
+      - name: SPECIAL_LEVEL
+        valueFrom:
+          configMapKeyRef:
+            name: special-config
+            key: SPECIAL_LEVEL
+      - name: SPECIAL_TYPE
+        valueFrom:
+          configMapKeyRef:
+            name: special-config
+            key: SPECIAL_TYPE
   volumes:
   - name: azure-secrets
     csi:
