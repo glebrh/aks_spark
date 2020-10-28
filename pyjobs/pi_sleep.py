@@ -18,7 +18,7 @@ if __name__ == "__main__":
         .getOrCreate()
     
     print("Start 60 seconds sleep")
-    time.sleep(2.4)
+    time.sleep(60)
     print("Ended sleep")
     
     partitions = int(sys.argv[1]) if len(sys.argv) > 1 else 2

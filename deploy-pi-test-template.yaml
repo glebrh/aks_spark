@@ -10,6 +10,6 @@ spec:
   containers:
   - name: spark-submit-test-deploy-container-v2
     image: sparkimagesglebs.azurecr.io/spark-py:3.0.0
-    args: ["/opt/spark/bin/spark-submit", "--master", "k8s://https://sparkakscluster-dns-46f9cb01.hcp.westeurope.azmk8s.io:443", "--deploy-mode", "cluster", "--name", "spark-app-from-yaml", "--conf", "spark.executor.instances=1", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark", "--conf", "spark.kubernetes.container.image=sparkimagesglebs.azurecr.io/spark-py:3.0.0", "https://sparkstor.blob.core.windows.net/pyjobs/pi_sleep.py"]
+    args: ["/opt/spark/bin/spark-submit", "--master", "k8s://https://sparkakscluster-dns-46f9cb01.hcp.westeurope.azmk8s.io:443", "--deploy-mode", "cluster", "--name", "spark-app-from-yaml", "--conf", "spark.executor.instances=1", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark", "--conf", "spark.kubernetes.container.image=sparkimagesglebs.azurecr.io/spark-py:3.0.0", "--conf", "spark.kubernetes.driver.volumes.persistentVolumeClaim.azure.mount.path=/mnt/azure", "--conf", "spark.kubernetes.driver.volumes.persistentVolumeClaim.azure.options.claimName=spark-pvc", "--conf", "spark.kubernetes.executor.volumes.persistentVolumeClaim.azure.mount.path=/mnt/azure", "--conf", "spark.kubernetes.executor.volumes.persistentVolumeClaim.azure.options.claimName=spark-pvc", "local:///mnt/azure/pyjobs/pi_sleep.py"]
   serviceAccountName: spark
   restartPolicy: Never
