@@ -1,11 +1,15 @@
 apiVersion: v1
 kind: Pod
+metadata:
+  labels:
+    purpose: test-template
 spec:
   containers:
-    volumeMounts:
-      - name: azure-secrets
-        mountPath: /mnt/azure-secrets
-        readOnly: true
+    - name: template-container
+      volumeMounts:
+        - name: azure-secrets
+          mountPath: /mnt/azure-secrets
+          readOnly: true
   volumes:
   - name: azure-secrets
     csi:
