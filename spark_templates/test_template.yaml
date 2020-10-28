@@ -3,3 +3,6 @@ kind: Pod
 metadata:
   labels:
     purpose: test-template
+spec:
+  containers:
+    - name: template-container
