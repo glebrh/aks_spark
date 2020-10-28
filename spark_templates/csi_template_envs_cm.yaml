@@ -7,12 +7,12 @@ spec:
       mountPath: /mnt/azure-secrets
       readOnly: true
     env:
-      - name: CLIEND_ID
+      - name: CLIENT_ID
         valueFrom:
           secretKeyRef:
             name: akvsecrets
             key: clientid
-      - name: CLIEND_SECRET
+      - name: CLIENT_SECRET
         valueFrom:
           secretKeyRef:
             name: akvsecrets
