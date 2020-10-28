@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    purpose: test-template
+spec:
+  containers:
+    - name: template-container
+      volumeMounts:
+        - name: azurever2
+          mountPath: /mnt/azurever2
+  volumes:
+  - name: azurever2
+    persistentVolumeClaim:
+      claimName: spark-pvc
