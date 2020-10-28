@@ -2,11 +2,11 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-    - volumeMounts:
-      - name: azure-secrets
-        mountPath: /mnt/azure-secrets
-        readOnly: true
-      env:
+  - volumeMounts:
+    - name: azure-secrets
+      mountPath: /mnt/azure-secrets
+      readOnly: true
+    env:
       - name: CLIEND_ID
         valueFrom:
           secretKeyRef:
@@ -21,7 +21,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: akvsecrets
-            key: storageak
+            key: storageak  
   volumes:
   - name: azure-secrets
     csi:

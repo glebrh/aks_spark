@@ -4,6 +4,7 @@ import sys
 from random import random
 from operator import add
 import time
+import os
 
 from pyspark.sql import SparkSession
 
@@ -16,7 +17,9 @@ if __name__ == "__main__":
         .builder\
         .appName("PythonPi")\
         .getOrCreate()
-    
+
+    print("CLIEND_ID: ", os.getenv('CLIEND_ID'))
+    print("CLIEND_SECRET: ", os.getenv('CLIEND_SECRET'))
     print("Start 60 seconds sleep")
     time.sleep(60)
     print("Ended sleep")
