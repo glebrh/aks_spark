@@ -1,0 +1,13 @@
+ARG base_img
+
+FROM $base_img
+WORKDIR /
+
+# Reset to root to run installation tasks + required for spark-submit proper run
+USER 0
+
+# Installing curl (since not in original image)
+RUN apt install -y curl
+
+COPY spark-submit.sh /spark-submit-custom/spark-submit.sh
+RUN chmod +x /spark-submit-custom/spark-submit.sh
