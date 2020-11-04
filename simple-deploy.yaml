@@ -9,7 +9,7 @@ spec:
     runAsUser: 0 # Required to run spark-shell
   containers:
   - name: test-image-v1
-    image: sparkimagesglebs.azurecr.io/spark-py:3.0.0
+    image: sparkimagesglebs.azurecr.io/spark-submit:latest
     imagePullPolicy: Always
     args: ["/bin/bash", "-c", "--", "while true; do sleep 30; done;" ]
     volumeMounts:
