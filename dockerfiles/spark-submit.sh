@@ -41,7 +41,7 @@ if [[ -z "$k8s_namespace" ]] ||  [[ -z "$driver_pod_name" ]]  || [[ -z "$master_
 then
 	echo "Required parameters are not set, please check namespace, driver_pod_name or cluster URL settings"
 	#curl --location --request POST $callback_url --header $header --data-raw '{"Output":{"Return Message":"Required parameters are not set, please check namespace, driver_pod_name or cluster URL settings"}, "StatusCode": 400}'
-	exit 0
+	exit 1
 else
 	echo "All set, moving forward"
 fi
