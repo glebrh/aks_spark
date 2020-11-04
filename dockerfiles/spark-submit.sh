@@ -56,6 +56,6 @@ then
 	curl --location --request POST $callback_url --header $header --data-raw '{"Output":{"Return Message":"Job finished successfully, driver pod name: '$driver_pod_name'"}, "StatusCode": 200}'
 	exit 0
 else
-	curl --location --request POST $callback_url --header $header --data-raw '{"Output":{"Return Message":"Job failed, driver pod name: '$driver_pod_name'"}, "StatusCode": 200}'
+	curl --location --request POST $callback_url --header $header --data-raw '{"Output":{"Return Message":"Job failed, driver pod name: '$driver_pod_name'"}, "StatusCode": 400}'
 	exit 1
 fi
