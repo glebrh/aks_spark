@@ -11,3 +11,6 @@ RUN apt install -y curl
 
 COPY spark-submit.sh /spark-submit-custom/spark-submit.sh
 RUN chmod +x /spark-submit-custom/spark-submit.sh
+
+# Executing tini (anyway it will fetch parent entrypoint implicitely)
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
