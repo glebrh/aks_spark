@@ -35,12 +35,11 @@ echo $k8s_namespace
 echo $driver_pod_name
 echo $master_url
 
-header="Content-Type: application/json"
+header="Content-Type:application/json"
 
 if [[ -z "$k8s_namespace" ]] &&  [[ -z "$driver_pod_name" ]]  && [[ -z "$master_url" ]]
 then
-	body='{"Output":{"Return Message":"Required parameters are not set, please check namespace, driver_pod_name or cluster URL settings"}, "StatusCode": 400}'
-	#curl --header $header --request POST --data $body $callback_url
+	curl --location --request POST $callback_url --header $header --data-raw '{"Output":{"Return Message":"Required parameters are not set, please check namespace, driver_pod_name or cluster URL settings"}, "StatusCode": 400}'
 	echo $body
 exit 0
 else
@@ -54,13 +53,9 @@ exit_code_res=$($SPARK_HOME/bin/spark-submit --status $k8s_namespace:$driver_pod
 echo "Exit code is" $exit_code_res
 if [[ $exit_code_res == "0" ]]
 then
-	body='{"Output":{"Return Message":"Job finished successfully, driver pod name: '$driver_pod_name'"}, "StatusCode": 200}'
-	echo $body
-	#curl --header $header --request POST --data $body $callback_url
+	curl --location --request POST $callback_url --header $header --data-raw '{"Output":{"Return Message":"Job finished successfully, driver pod name: '$driver_pod_name'"}, "StatusCode": 200}'
 	exit 0
 else
-	body='{"Output":{"Return Message":"Job failed, driver pod name: '$driver_pod_name'"}, "StatusCode": 400}'
-	echo $body
-	#curl --header $header --request POST --data $body $callback_url
+	curl --location --request POST $callback_url --header $header --data-raw '{"Output":{"Return Message":"Job failed, driver pod name: '$driver_pod_name'"}, "StatusCode": 200}'
 	exit 1
 fi
