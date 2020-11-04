@@ -17,8 +17,15 @@ if __name__ == "__main__":
         .appName("ADLSTest")\
         .getOrCreate()
     
-    print("SPARK DIST CLASSPATH IS: ", os.getenv('SPARK_DIST_CLASSPATH'))
-    print("HADOOP HOME IS: ", os.getenv('HADOOP_HOME'))
+    CLIENT_ID=os.getenv("CLIENT_ID")
+    CLIENT_SECRET=os.getenv("CLIENT_SECRET")
+    spark.conf.set("fs.azure.account.auth.type.sparkstor.dfs.core.windows.net", "OAuth")
+    spark.conf.set("fs.azure.account.oauth.provider.type.sparkstor.dfs.core.windows.net", "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
+    spark.conf.set("fs.azure.account.oauth2.client.id.sparkstor.dfs.core.windows.net", CLIENT_ID)
+    spark.conf.set("fs.azure.account.oauth2.client.secret.sparkstor.dfs.core.windows.net", CLIENT_SECRET)
+    spark.conf.set("fs.azure.account.oauth2.client.endpoint.sparkstor.dfs.core.windows.net", "https://login.microsoftonline.com/6c51c659-9d52-41af-81f7-dde16380e813/oauth2/token")
+    
+    
     n = spark.read.csv("abfss://sparkdata@sparkstor.dfs.core.windows.net/files", header=True).count()
     print("Lines number is %s" % n)
 
