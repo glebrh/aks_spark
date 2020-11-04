@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pi-error
+  labels:
+    purpose: demonstrate-command
+spec:
+  securityContext:
+    runAsUser: 0
+  containers:
+  - name: spark-submit-test-deploy-container-v2
+    image: sparkimagesglebs.azurecr.io/spark-submit:latest
+    args: ["/spark-submit-custom/spark-submit-k8s.sh", "--master", "k8s://https://sparkakscluster-dns-46f9cb01.hcp.westeurope.azmk8s.io:443", "--deploy-mode", "cluster", "--name", "spark-app-from-yaml", "--conf", "spark.executor.instances=1", "--conf", "spark.kubernetes.authenticate.driver.serviceAccountName=spark", "--conf", "spark.kubernetes.container.image=sparkimagesglebs.azurecr.io/spark-py:3.0.1", "--conf", "spark.kubernetes.driver.volumes.persistentVolumeClaim.azure.mount.path=/mnt/azure", "--conf", "spark.kubernetes.driver.volumes.persistentVolumeClaim.azure.options.claimName=spark-pvc", "--conf", "spark.kubernetes.executor.volumes.persistentVolumeClaim.azure.mount.path=/mnt/azure", "--conf", "spark.kubernetes.executor.volumes.persistentVolumeClaim.azure.options.claimName=spark-pvc", "local:///mnt/azure/pyjobs/pi_error.py"]
+  serviceAccountName: spark
+  restartPolicy: Never
