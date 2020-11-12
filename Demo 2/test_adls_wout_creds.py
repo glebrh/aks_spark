@@ -19,6 +19,7 @@ if __name__ == "__main__":
     
     CLIENT_ID=os.getenv("CLIENT_ID")
     CLIENT_SECRET=os.getenv("CLIENT_SECRET")
+    print(os.getenv("SPARK_CONF_DIR"))
     openssl_path = spark.conf.get("org.wildfly.openssl.path")
     print("OpenSSL path is: {0}".format(openssl_path))
     spark.conf.set("fs.azure.account.auth.type.sparkstor.dfs.core.windows.net", "OAuth")

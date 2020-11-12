@@ -21,9 +21,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: akvsecrets
-            key: storageak
-      - name: SPARK_CONF_DIR
-        value: "/mnt/azure/spark_conf"
+            key: storageak  
   volumes:
   - name: azure-secrets
     csi:
